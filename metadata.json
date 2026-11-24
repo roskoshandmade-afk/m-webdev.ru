@@ -1,0 +1,6 @@
+{
+  "name": "Таврика Веб — Сайты, квизы и Telegram-боты в Крыму",
+  "description": "Веб-студия в Крыму (Саки, Симферополь, Севастополь, Ялта): разработка сайтов, квизов и Telegram-ботов под ключ за 1–3 дня с онлайн-калькулятором стоимости и готовыми нишевыми демо.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
