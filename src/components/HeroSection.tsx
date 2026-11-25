@@ -79,7 +79,7 @@ export function HeroSection({onRequestPrototype, onJumpToCalculator}: HeroSectio
                 />
                 <figcaption className="absolute bottom-3 left-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/88 backdrop-blur-md border border-white/70 text-xs font-semibold text-[#0F172A] shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-[#0EA5E9] shrink-0" aria-hidden="true" />
-                  <span>M_WEB • Крым, Саки — ЮБК</span>
+                  <span>M_WEB · Онлайн · Крым и РФ</span>
                 </figcaption>
               </div>
             </figure>
