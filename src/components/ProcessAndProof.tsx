@@ -7,7 +7,7 @@ export function ProcessAndProof() {
   return (
     <section
       id="process"
-      className="relative overflow-hidden py-16 sm:py-24 bg-[#F8FAFC] border-b border-[#E2E8F0]"
+      className="relative overflow-hidden py-16 sm:py-24 bg-transparent border-b border-[#E2E8F0]"
     >
       <PalmShadows variant="process" />
 
@@ -16,7 +16,7 @@ export function ProcessAndProof() {
           <div className="space-y-2.5 max-w-2xl">
             <p className="text-sm font-semibold text-[#2563EB]">02. Как работаем</p>
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-[-0.025em] text-[#0F172A] text-balance">
-              Три понятных шага от идеи до первых заявок
+              Как мы работаем: от задачи до готовых заявок за 1–3 дня
             </h2>
           </div>
 

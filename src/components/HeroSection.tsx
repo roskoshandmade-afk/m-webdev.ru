@@ -18,7 +18,7 @@ export function HeroSection({onRequestPrototype, onJumpToCalculator}: HeroSectio
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-[#F8FAFC] pt-10 pb-14 sm:pt-14 sm:pb-20 lg:pt-20 lg:pb-24 border-b border-[#E2E8F0]"
+      className="relative overflow-hidden bg-transparent pt-10 pb-14 sm:pt-14 sm:pb-20 lg:pt-20 lg:pb-24 border-b border-[#E2E8F0]"
     >
       <PalmShadows variant="hero" />
 
@@ -41,9 +41,7 @@ export function HeroSection({onRequestPrototype, onJumpToCalculator}: HeroSectio
               </h1>
 
               <p className="text-base sm:text-lg leading-relaxed text-[#475569] max-w-xl">
-                Проектируем и разрабатываем быстрые сайты, веб-сервисы, квизы и Telegram-ботов для
-                бизнеса в Крыму без перегруженных шаблонов. Все заявки с сайта приходят напрямую в
-                ваш Telegram и мессенджер MAX.
+                Профессиональная разработка сайтов, лид-квизов, веб-приложений и интеграция Telegram-ботов для бизнеса в Крыму и по всей России. Быстрый запуск без шаблонных конструкторов и лишних поездок — заявки поступают напрямую в Telegram и мессенджер MAX.
               </p>
             </div>
 

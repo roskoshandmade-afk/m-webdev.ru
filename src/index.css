@@ -9,18 +9,20 @@
 
 @layer base {
   html {
-    background-color: #f8fafc;
+    background: linear-gradient(135deg, #f8fafc 0%, #f4f7fc 45%, #eef4ff 100%);
     color: #0f172a;
     font-family: var(--font-sans);
     overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
   }
 
   body {
-    background-color: #f8fafc;
+    background: transparent;
     color: #0f172a;
     overflow-x: clip;
+    min-height: 100vh;
   }
 
   h1,

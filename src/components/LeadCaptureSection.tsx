@@ -194,18 +194,17 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
   };
 
   return (
-    <section id="lead-form" className="relative overflow-hidden py-16 sm:py-24 bg-[#F8FAFC]">
+    <section id="lead-form" className="relative overflow-hidden py-16 sm:py-24 bg-transparent">
       <PalmShadows variant="contact" />
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-2.5 max-w-2xl mb-10 sm:mb-12">
           <p className="text-sm font-semibold text-[#2563EB]">03. Связь и бесплатный прототип</p>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-[-0.025em] text-[#0F172A] text-balance">
-            Обсудить проект и получить прототип за 24 ч
+            Обсудить проект и заказать бесплатный прототип
           </h2>
           <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
-            Выбранные услуги и смета уже подставлены в бриф. Отправьте заявку напрямую в Telegram
-            или мессенджер MAX.
+            Ваши параметры и предварительная смета уже сформированы в бриф. Отправьте заявку в один клик в Telegram или мессенджер MAX.
           </p>
         </div>
 

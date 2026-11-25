@@ -58,7 +58,7 @@ export function ServicesAndCalculator({
   return (
     <section
       id="services"
-      className="relative overflow-hidden py-16 sm:py-24 bg-[#F8FAFC] border-b border-[#E2E8F0]"
+      className="relative overflow-hidden py-16 sm:py-24 bg-transparent border-b border-[#E2E8F0]"
     >
       <PalmShadows variant="services" />
 
@@ -67,11 +67,10 @@ export function ServicesAndCalculator({
           <div className="space-y-2.5 max-w-2xl">
             <p className="text-sm font-semibold text-[#2563EB]">01. Услуги и расчёт</p>
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-[-0.025em] text-[#0F172A] text-balance">
-              Выберите задачу — стоимость и срок посчитаются сразу
+              Каталог услуг и онлайн-калькулятор стоимости
             </h2>
             <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
-              Прозрачный прайс без скрытых доплат. Отметьте нужную услугу и дополнительные опции,
-              чтобы сразу увидеть ориентировочную смету.
+              Прозрачный прайс на создание сайтов, квизов, ботов и веб-сервисов без скрытых доплат. Выберите услугу, настройте опции и сразу рассчитайте смету проекта.
             </p>
           </div>
 

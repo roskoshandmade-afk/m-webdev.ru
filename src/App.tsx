@@ -80,7 +80,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#F8FAFC] text-[#0F172A] flex flex-col">
+    <div className="min-h-screen overflow-x-hidden bg-transparent text-[#0F172A] flex flex-col">
       <Header onRequestPrototype={() => scrollToSection('lead-form', true)} />
 
       <main className="flex-1">
