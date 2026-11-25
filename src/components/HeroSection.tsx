@@ -1,5 +1,5 @@
 import {ArrowRight, Calculator} from 'lucide-react';
-import developerCrimeaPhoto from '../assets/images/developer_crimea_window_1795559689352.jpg';
+import developerCrimeaPhoto from '../assets/images/male_developer_crimea_1795595394890.jpg';
 import {PalmShadows} from './PalmShadows';
 
 interface HeroSectionProps {
