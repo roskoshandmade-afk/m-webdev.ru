@@ -5,7 +5,7 @@ import {
   type ServiceOption,
 } from '../data/studioData';
 
-export const CALCULATOR_STORAGE_KEY = 'limur_web_calculator_v3';
+export const CALCULATOR_STORAGE_KEY = 'm_web_calculator_v1';
 
 export interface CalculatorState {
   primaryServiceId: string;
@@ -129,7 +129,7 @@ export function buildFormattedBrief(input: LeadBriefInput): string {
   const lines: string[] = [
     input.forAvito
       ? 'Здравствуйте! Интересует разработка под ключ и бесплатный прототип первого экрана.'
-      : 'Заявка на бесплатный прототип первого экрана — LI.MUR WEB (Крым)',
+      : 'Заявка на бесплатный прототип первого экрана — M_WEB (Крым)',
     '',
     `Услуга: ${estimate.service.title}`,
     `Доп. опции: ${addonNames}`,

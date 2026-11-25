@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Menu, X} from 'lucide-react';
-import {LimurLogo} from './LimurLogo';
+import {MWebLogo} from './MWebLogo';
 
 interface HeaderProps {
   onRequestPrototype: () => void;
@@ -21,15 +21,15 @@ export function Header({onRequestPrototype}: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#F8FAFC]/90 backdrop-blur-md border-b border-[#E2E8F0]">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-8">
-        {/* Zone 1: True-to-brand native HTML/CSS LI.MUR WEB logo */}
+    <header className="relative sm:sticky sm:top-0 z-40 bg-[#F8FAFC]/90 backdrop-blur-md border-b border-[#E2E8F0]">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-auto sm:py-2.5 flex items-center justify-between gap-4 sm:gap-8">
+        {/* Zone 1: Compact M_WEB inline SVG + Manrope wordmark */}
         <a
           href="#top"
-          aria-label="LI.MUR WEB — веб-дизайн и разработка"
+          aria-label="M_WEB — на главную"
           className="inline-flex items-center shrink-0 py-0.5 transition-opacity duration-150 hover:opacity-85"
         >
-          <LimurLogo surfaceClass="bg-[#F8FAFC]" />
+          <MWebLogo />
         </a>
 
         {/* Zone 2: 4 clean single-line navigation links */}

@@ -11,7 +11,7 @@ const HERO_METRICS = [
   {value: '1–3 дня', label: 'Запуск под ключ'},
   {value: '0 ₽', label: 'За первый экран до оплаты'},
   {value: 'Без VPN', label: 'Работа в Крыму на РФ-серверах'},
-  {value: 'Саки · Весь Крым', label: 'Личная встреча или онлайн'},
+  {value: '100% онлайн', label: 'Работаем по всему Крыму и РФ'},
 ];
 
 export function HeroSection({onRequestPrototype, onJumpToCalculator}: HeroSectionProps) {
@@ -32,7 +32,7 @@ export function HeroSection({onRequestPrototype, onJumpToCalculator}: HeroSectio
                   <span className="absolute inline-flex h-full w-full rounded-full bg-[#0EA5E9] opacity-65 animate-ping" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0EA5E9]" />
                 </span>
-                <span>Крым · Саки · Симферополь · Севастополь · Ялта</span>
+                <span>Работаем онлайн по всему Крыму и РФ</span>
               </div>
 
               <h1 className="font-heading text-3xl sm:text-[3rem] lg:text-[3.35rem] font-extrabold text-[#0F172A] leading-[1.08] tracking-[-0.03em] text-balance">
@@ -74,26 +74,26 @@ export function HeroSection({onRequestPrototype, onJumpToCalculator}: HeroSectio
               <div className="relative overflow-hidden rounded-xl bg-[#F1F5F9]">
                 <img
                   src={developerCrimeaPhoto}
-                  alt="Веб-разработчик студии LI.MUR WEB за работой у панорамного окна с видом на море и горы Крыма"
+                  alt="Веб-разработчик студии M_WEB за работой у панорамного окна с видом на море и горы Крыма"
                   className="w-full aspect-[4/3] object-cover block"
                 />
                 <figcaption className="absolute bottom-3 left-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/88 backdrop-blur-md border border-white/70 text-xs font-semibold text-[#0F172A] shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-[#0EA5E9] shrink-0" aria-hidden="true" />
-                  <span>LI.MUR WEB • Крым, Саки — ЮБК</span>
+                  <span>M_WEB • Крым, Саки — ЮБК</span>
                 </figcaption>
               </div>
             </figure>
           </div>
         </div>
 
-        {/* Unified 4-Column Metrics Bar at Bottom of Hero */}
-        <div className="mt-12 sm:mt-16 bg-white border border-[#E2E8F0] rounded-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#E2E8F0] overflow-hidden shadow-sm">
+        {/* Compact 2x2 Mobile / 4-Column Desktop Metrics Bar at Bottom of Hero */}
+        <div className="mt-10 sm:mt-16 bg-[#E2E8F0] border border-[#E2E8F0] rounded-2xl grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden shadow-sm">
           {HERO_METRICS.map((metric) => (
             <div
               key={metric.value}
-              className="px-6 py-5 sm:py-6 flex flex-col justify-between gap-1.5"
+              className="bg-white p-3.5 sm:p-5 flex flex-col justify-between gap-1"
             >
-              <div className="font-heading text-xl sm:text-2xl font-extrabold text-[#0F172A] tabular-nums tracking-[-0.02em]">
+              <div className="font-heading text-base sm:text-xl lg:text-2xl font-extrabold text-[#0F172A] tabular-nums tracking-[-0.02em] leading-tight">
                 {metric.value}
               </div>
               <p className="text-xs sm:text-sm font-normal text-[#475569] leading-snug">

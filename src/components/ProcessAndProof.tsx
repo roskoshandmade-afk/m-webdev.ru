@@ -21,7 +21,7 @@ export function ProcessAndProof() {
           </div>
 
           <p className="text-xs sm:text-sm text-[#475569] whitespace-nowrap shrink-0">
-            На связи в Telegram, MAX и на Авито
+            Формат: 100% онлайн — без лишних поездок
           </p>
         </div>
 

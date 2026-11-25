@@ -63,39 +63,41 @@ export function ServicesAndCalculator({
           </p>
         </div>
 
-        {/* 4 Clean Category Tabs in a Unified Architectural Control Rail */}
-        <div
-          role="tablist"
-          aria-label="Категории услуг"
-          className="inline-flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_8px_24px_-16px_rgba(15,23,42,0.08)] mb-8"
-        >
-          {SERVICE_TABS.map((tab) => {
-            const active = activeTab === tab.id;
-            const count = SERVICE_CATALOG.filter((item) => item.category === tab.id).length;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                onClick={() => setActiveTab(tab.id)}
-                className={`min-h-[40px] px-4 py-2 rounded-xl text-sm font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer inline-flex items-center gap-2 ${
-                  active
-                    ? 'bg-[#0F172A] text-white'
-                    : 'text-[#475569] hover:text-[#0F172A] hover:bg-[#F8FAFC]'
-                }`}
-              >
-                <span>{tab.label}</span>
-                <span
-                  className={`text-xs font-medium tabular-nums ${
-                    active ? 'text-slate-300' : 'text-slate-400'
+        {/* 4 Clean Category Tabs in a Single-Row Scrollable Control Rail */}
+        <div className="-mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mb-8">
+          <div
+            role="tablist"
+            aria-label="Категории услуг"
+            className="inline-flex flex-nowrap items-center gap-1.5 p-1.5 rounded-2xl bg-white border border-[#E2E8F0] shadow-[0_8px_24px_-16px_rgba(15,23,42,0.08)] min-w-max"
+          >
+            {SERVICE_TABS.map((tab) => {
+              const active = activeTab === tab.id;
+              const count = SERVICE_CATALOG.filter((item) => item.category === tab.id).length;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer inline-flex items-center gap-2 ${
+                    active
+                      ? 'bg-[#0F172A] text-white'
+                      : 'text-[#475569] hover:text-[#0F172A] hover:bg-[#F8FAFC]'
                   }`}
                 >
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+                  <span className="whitespace-nowrap">{tab.label}</span>
+                  <span
+                    className={`text-xs font-medium tabular-nums shrink-0 ${
+                      active ? 'text-slate-300' : 'text-slate-400'
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Main 2-Column Layout: Crisp White Service Cards + Elevated Sticky Estimate Sheet */}

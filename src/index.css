@@ -12,6 +12,7 @@
     background-color: #f8fafc;
     color: #0f172a;
     font-family: var(--font-sans);
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -19,6 +20,7 @@
   body {
     background-color: #f8fafc;
     color: #0f172a;
+    overflow-x: clip;
   }
 
   h1,

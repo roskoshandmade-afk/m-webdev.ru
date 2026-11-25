@@ -1,4 +1,4 @@
-import {LimurLogo} from './LimurLogo';
+import {MWebLogo} from './MWebLogo';
 
 export function Footer() {
   return (
@@ -7,10 +7,10 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
           <a
             href="#top"
-            aria-label="LI.MUR WEB — веб-дизайн и разработка"
+            aria-label="M_WEB — на главную"
             className="inline-flex items-center self-start transition-opacity duration-150 hover:opacity-85 shrink-0"
           >
-            <LimurLogo surfaceClass="bg-white" />
+            <MWebLogo />
           </a>
 
           <div className="space-y-1.5">
@@ -18,7 +18,7 @@ export function Footer() {
               Веб-дизайн и разработка под ключ в Крыму
             </p>
             <p className="text-xs sm:text-sm text-[#475569] max-w-md leading-relaxed">
-              Саки · Симферополь · Севастополь · Ялта · Telegram, MAX и Авито
+              Работаем 100% онлайн по всему Крыму и РФ · Telegram, MAX и Авито
             </p>
           </div>
         </div>
@@ -29,27 +29,21 @@ export function Footer() {
         >
           <a
             href="#services"
-            className="hover:text-[#0F172A] underline-offset-4 hover:underline decoration-[#2563EB] decoration-2 transition-colors whitespace-nowrap"
+            className="hover:text-[#0F172A] underline-offset-4 hover:underline decoration-[#2563EB] decoration-2 transition-colors whitespace-nowrap shrink-0"
           >
             Услуги
           </a>
           <a
             href="#calculator"
-            className="hover:text-[#0F172A] underline-offset-4 hover:underline decoration-[#2563EB] decoration-2 transition-colors whitespace-nowrap"
+            className="hover:text-[#0F172A] underline-offset-4 hover:underline decoration-[#2563EB] decoration-2 transition-colors whitespace-nowrap shrink-0"
           >
             Калькулятор
           </a>
           <a
             href="#process"
-            className="hover:text-[#0F172A] underline-offset-4 hover:underline decoration-[#2563EB] decoration-2 transition-colors whitespace-nowrap"
+            className="hover:text-[#0F172A] underline-offset-4 hover:underline decoration-[#2563EB] decoration-2 transition-colors whitespace-nowrap shrink-0"
           >
             Как работаем
-          </a>
-          <a
-            href="#lead-form"
-            className="hover:text-[#0F172A] underline-offset-4 hover:underline decoration-[#2563EB] decoration-2 transition-colors whitespace-nowrap"
-          >
-            Контакты
           </a>
         </nav>
       </div>
