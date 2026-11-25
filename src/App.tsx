@@ -3,11 +3,9 @@ import {Footer} from './components/Footer';
 import {Header} from './components/Header';
 import {HeroSection} from './components/HeroSection';
 import {LeadCaptureSection} from './components/LeadCaptureSection';
-import {NicheDemos} from './components/NicheDemos';
-import {NichePreviewModal} from './components/NichePreviewModal';
-import {PriceCalculator} from './components/PriceCalculator';
 import {ProcessAndProof} from './components/ProcessAndProof';
-import type {AddonId, NicheDemoCard, ProjectTypeId} from './data/studioData';
+import {ServicesAndCalculator} from './components/ServicesAndCalculator';
+import type {AddonId, ServiceOption} from './data/studioData';
 import {
   DEFAULT_CALCULATOR_STATE,
   loadCalculatorState,
@@ -17,27 +15,51 @@ import {
 
 export default function App() {
   const [calcState, setCalcState] = useState<CalculatorState>(() => loadCalculatorState());
-  const [activePreviewDemo, setActivePreviewDemo] = useState<NicheDemoCard | null>(null);
-  const nameInputRef = useRef<HTMLInputElement | null>(null);
+  const contactInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     saveCalculatorState(calcState);
   }, [calcState]);
 
-  const scrollToSection = (sectionId: string, focusNameInput = false) => {
+  const scrollToSection = (sectionId: string, focusContactInput = false) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({behavior: 'smooth', block: 'start'});
     }
-    if (focusNameInput) {
+    if (focusContactInput) {
       window.setTimeout(() => {
-        nameInputRef.current?.focus({preventScroll: true});
+        contactInputRef.current?.focus({preventScroll: true});
       }, 450);
     }
   };
 
-  const handleSelectProjectType = (projectTypeId: ProjectTypeId) => {
-    setCalcState((prev) => ({...prev, projectTypeId}));
+  const handleSelectService = (service: ServiceOption) => {
+    setCalcState((prev) => {
+      if (service.kind === 'primary') {
+        const nextAddons =
+          service.alsoAddAddonId && !prev.addonIds.includes(service.alsoAddAddonId)
+            ? [...prev.addonIds, service.alsoAddAddonId]
+            : prev.addonIds;
+        return {
+          primaryServiceId: service.id,
+          addonIds: nextAddons,
+        };
+      }
+
+      if (!service.addonId) {
+        return prev;
+      }
+
+      const exists = prev.addonIds.includes(service.addonId);
+      const nextAddons = exists
+        ? prev.addonIds.filter((id) => id !== service.addonId)
+        : [...prev.addonIds, service.addonId];
+
+      return {
+        ...prev,
+        addonIds: nextAddons,
+      };
+    });
   };
 
   const handleToggleAddon = (addonId: AddonId) => {
@@ -46,30 +68,19 @@ export default function App() {
       const nextAddons = exists
         ? prev.addonIds.filter((id) => id !== addonId)
         : [...prev.addonIds, addonId];
-      return {...prev, addonIds: nextAddons};
+      return {
+        ...prev,
+        addonIds: nextAddons,
+      };
     });
-  };
-
-  const handleClearNiche = () => {
-    setCalcState((prev) => ({...prev, selectedNicheId: null}));
   };
 
   const handleResetCalculator = () => {
     setCalcState(DEFAULT_CALCULATOR_STATE);
   };
 
-  const handleApplyDemoToCalculator = (demo: NicheDemoCard) => {
-    setCalcState({
-      projectTypeId: demo.recommendedProjectType,
-      addonIds: demo.recommendedAddons,
-      selectedNicheId: demo.id,
-    });
-    setActivePreviewDemo(null);
-    scrollToSection('calculator');
-  };
-
   return (
-    <div className="min-h-screen bg-[#18181B] text-[#FAFAFA] flex flex-col">
+    <div className="min-h-screen overflow-x-hidden bg-[#F8FAFC] text-[#0F172A] flex flex-col">
       <Header onRequestPrototype={() => scrollToSection('lead-form', true)} />
 
       <main className="flex-1">
@@ -78,33 +89,20 @@ export default function App() {
           onJumpToCalculator={() => scrollToSection('calculator')}
         />
 
-        <PriceCalculator
-          state={calcState}
-          onSelectProjectType={handleSelectProjectType}
+        <ServicesAndCalculator
+          calcState={calcState}
+          onSelectService={handleSelectService}
           onToggleAddon={handleToggleAddon}
-          onClearNiche={handleClearNiche}
           onReset={handleResetCalculator}
           onProceedToLead={() => scrollToSection('lead-form', true)}
         />
 
-        <NicheDemos
-          selectedNicheId={calcState.selectedNicheId}
-          onOpenPreview={(demo) => setActivePreviewDemo(demo)}
-          onApplyDemoToCalculator={handleApplyDemoToCalculator}
-        />
-
         <ProcessAndProof />
 
-        <LeadCaptureSection calcState={calcState} nameInputRef={nameInputRef} />
+        <LeadCaptureSection calcState={calcState} nameInputRef={contactInputRef} />
       </main>
 
       <Footer />
-
-      <NichePreviewModal
-        demo={activePreviewDemo}
-        onClose={() => setActivePreviewDemo(null)}
-        onUseTemplate={handleApplyDemoToCalculator}
-      />
     </div>
   );
 }

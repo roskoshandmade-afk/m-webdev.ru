@@ -1,157 +1,285 @@
-export type ProjectTypeId =
-  | 'visitka'
-  | 'landing'
-  | 'quiz'
-  | 'corporate'
-  | 'shop'
-  | 'telegram-bot';
+export type ServiceCategoryId = 'sites' | 'design-dev' | 'bots' | 'marketing-seo';
 
-export type AddonId = 'yandex-direct' | 'basic-seo' | 'domain-hosting-rf';
+export type AddonId =
+  | 'yandex-direct'
+  | 'basic-seo'
+  | 'domain-hosting-rf'
+  | 'layout-content'
+  | 'monthly-support';
 
-export type NicheDemoId = 'hotel' | 'construction' | 'autoservice' | 'beauty-med';
-
-export interface ProjectTypeOption {
-  id: ProjectTypeId;
+export interface ServiceOption {
+  id: string;
+  category: ServiceCategoryId;
   title: string;
-  shortDesc: string;
   price: number;
+  priceLabel: string;
   minDays: number;
   maxDays: number;
-  deliverables: string[];
-  bestFor: string;
+  turnaround: string;
+  kind: 'primary' | 'addon';
+  addonId?: AddonId;
+  alsoAddAddonId?: AddonId;
 }
 
 export interface AddonOption {
   id: AddonId;
   title: string;
-  description: string;
   price: number;
   extraDays: number;
-  note: string;
+  timingNote: string;
 }
-
-export interface NicheDemoPreviewData {
-  brandName: string;
-  cityTag: string;
-  heroTitle: string;
-  heroSubtitle: string;
-  primaryCta: string;
-  phoneDisplay: string;
-  highlights: {label: string; value: string}[];
-  interactiveLabel: string;
-  interactiveOptions: {id: string; label: string; estimate: string; detail: string}[];
-  includedBlocks: string[];
-}
-
-export interface NicheDemoCard {
-  id: NicheDemoId;
-  title: string;
-  cities: string;
-  recommendedProjectType: ProjectTypeId;
-  recommendedAddons: AddonId[];
-  launchTime: string;
-  priceHint: string;
-  conversionMetric: string;
-  summary: string;
-  imageUrl: string;
-  imageAlt: string;
-  preview: NicheDemoPreviewData;
-}
-
-export const HERO_IMAGE_URL = '/src/assets/images/hero_crimea_studio_1795553200814.jpg';
 
 export const CRIMEA_CITIES = [
   'Саки',
   'Симферополь',
   'Севастополь',
   'Ялта',
-  'Евпатория / Другой город Крыма',
+  'Евпатория',
+  'Другой город Крыма',
 ] as const;
 
-export const PROJECT_TYPES: ProjectTypeOption[] = [
+export const SERVICE_TABS: {id: ServiceCategoryId; label: string}[] = [
+  {id: 'sites', label: 'Сайты под ключ'},
+  {id: 'design-dev', label: 'Дизайн и доработка'},
+  {id: 'bots', label: 'Telegram-боты'},
+  {id: 'marketing-seo', label: 'Реклама и SEO'},
+];
+
+export const SERVICE_CATALOG: ServiceOption[] = [
+  // Сайты под ключ
   {
-    id: 'visitka',
+    id: 'srv-visitka',
+    category: 'sites',
     title: 'Сайт-визитка',
-    shortDesc: 'Компактная страница с услугами, ценами, картой проезда и быстрой связью.',
     price: 6000,
+    priceLabel: 'от 6 000 ₽',
     minDays: 1,
     maxDays: 2,
-    deliverables: [
-      'До 4 смысловых экранов под мобильные и ПК',
-      'Кнопки связи в Telegram, WhatsApp и звонок',
-      'Яндекс Карты и подключение Яндекс Метрики',
-    ],
-    bestFor: 'Частные мастера, юристы, врачи, небольшие услуги',
+    turnaround: '1–2 дня',
+    kind: 'primary',
   },
   {
-    id: 'landing',
+    id: 'srv-quiz',
+    category: 'sites',
+    title: 'Квиз-сайт',
+    price: 7000,
+    priceLabel: 'от 7 000 ₽',
+    minDays: 1,
+    maxDays: 2,
+    turnaround: '1–2 дня',
+    kind: 'primary',
+  },
+  {
+    id: 'srv-landing',
+    category: 'sites',
     title: 'Лендинг',
-    shortDesc: 'Продающая одностраничная структура с оффером, кейсами и формой захвата.',
     price: 15000,
+    priceLabel: 'от 15 000 ₽',
     minDays: 2,
     maxDays: 3,
-    deliverables: [
-      'Прототип первого экрана бесплатно за 24 часа',
-      '6–8 конверсионных блоков и расчёт стоимости',
-      'Мгновенная отправка заявок в ваш Telegram',
-    ],
-    bestFor: 'Отели, стройка, автосервисы, клиники, реклама в Директе',
+    turnaround: '2–3 дня',
+    kind: 'primary',
   },
   {
-    id: 'quiz',
-    title: 'Квиз-сайт',
-    shortDesc: 'Интерактивный расчёт из 4–6 вопросов для снижения цены заявки с рекламы.',
-    price: 7000,
-    minDays: 1,
-    maxDays: 2,
-    deliverables: [
-      'Ветвление вопросов под вашу нишу и бонус в конце',
-      'Передача всех ответов клиента в Telegram-бот',
-      'Готовая посадка под трафик с Яндекс Директ и Авито',
-    ],
-    bestFor: 'Ремонт, кухни на заказ, бурение, подбор туров и автоуслуг',
+    id: 'srv-onepage',
+    category: 'sites',
+    title: 'Одностраничный сайт',
+    price: 15000,
+    priceLabel: 'от 15 000 ₽',
+    minDays: 2,
+    maxDays: 3,
+    turnaround: '2–3 дня',
+    kind: 'primary',
   },
   {
-    id: 'corporate',
+    id: 'srv-turnkey',
+    category: 'sites',
+    title: 'Разработка сайта под ключ',
+    price: 15000,
+    priceLabel: 'от 15 000 ₽',
+    minDays: 2,
+    maxDays: 4,
+    turnaround: '2–4 дня',
+    kind: 'primary',
+    alsoAddAddonId: 'domain-hosting-rf',
+  },
+  {
+    id: 'srv-corporate',
+    category: 'sites',
     title: 'Корпоративный сайт',
-    shortDesc: 'Многостраничный сайт компании с каталогом услуг, портфолио и разделами.',
-    price: 25000,
+    price: 22000,
+    priceLabel: 'от 22 000 ₽',
     minDays: 3,
     maxDays: 5,
-    deliverables: [
-      'Главная + до 6 внутренних разделов (услуги, кейсы, контакты)',
-      'Удобное редактирование текстов, прайсов и фотографий',
-      'Техническая SEO-структура под запросы по городам Крыма',
-    ],
-    bestFor: 'Строительные компании, медцентры, отельные комплексы, B2B',
+    turnaround: '3–5 дней',
+    kind: 'primary',
   },
   {
-    id: 'shop',
-    title: 'Интернет-магазин',
-    shortDesc: 'Каталог товаров с фильтрами, корзиной и приёмом заказов без лишней сложности.',
+    id: 'srv-shop',
+    category: 'sites',
+    title: 'Интернет-магазин / каталог',
     price: 25000,
+    priceLabel: 'от 25 000 ₽',
     minDays: 4,
     maxDays: 7,
-    deliverables: [
-      'Каталог категорий, карточки товаров и поиск по параметрам',
-      'Корзина, расчёт доставки по Крыму и РФ, уведомления в Telegram',
-      'Импорт прайса и подключение онлайн-оплаты (ЮKassa / СБП)',
-    ],
-    bestFor: 'Стройматериалы, крымская косметика, мебель, автозапчасти',
+    turnaround: '4–7 дней',
+    kind: 'primary',
   },
+
+  // Дизайн и доработка
   {
-    id: 'telegram-bot',
-    title: 'Telegram-бот',
-    shortDesc: 'Автоматизация заявок, прайса, записи клиентов или бронирования прямо в Telegram.',
-    price: 7000,
+    id: 'srv-figma',
+    category: 'design-dev',
+    title: 'Дизайн в Figma',
+    price: 5000,
+    priceLabel: 'от 5 000 ₽',
     minDays: 1,
     maxDays: 2,
-    deliverables: [
-      'Интерактивное меню, каталог услуг или запись на слот',
-      'Уведомления администратору и база заявок в Google Sheets / CRM',
-      'Размещение на стабильном российском сервере 24/7',
-    ],
-    bestFor: 'Бронирование номеров, запись в сервис/бьюти, приём заказов',
+    turnaround: '1–2 дня',
+    kind: 'primary',
+  },
+  {
+    id: 'srv-webdesign',
+    category: 'design-dev',
+    title: 'Создание дизайна сайта',
+    price: 5000,
+    priceLabel: 'от 5 000 ₽',
+    minDays: 1,
+    maxDays: 2,
+    turnaround: '1–2 дня',
+    kind: 'primary',
+  },
+  {
+    id: 'srv-redesign',
+    category: 'design-dev',
+    title: 'Редизайн сайта',
+    price: 5000,
+    priceLabel: 'от 5 000 ₽',
+    minDays: 1,
+    maxDays: 3,
+    turnaround: '1–3 дня',
+    kind: 'primary',
+  },
+  {
+    id: 'srv-layout',
+    category: 'design-dev',
+    title: 'Адаптивная вёрстка',
+    price: 8000,
+    priceLabel: 'от 8 000 ₽',
+    minDays: 1,
+    maxDays: 3,
+    turnaround: '1–3 дня',
+    kind: 'primary',
+  },
+  {
+    id: 'srv-fix',
+    category: 'design-dev',
+    title: 'Доработка сайта',
+    price: 2500,
+    priceLabel: 'от 2 500 ₽',
+    minDays: 1,
+    maxDays: 1,
+    turnaround: 'в день обращения',
+    kind: 'primary',
+  },
+  {
+    id: 'srv-content',
+    category: 'design-dev',
+    title: 'Наполнение сайта',
+    price: 2500,
+    priceLabel: 'от 2 500 ₽',
+    minDays: 1,
+    maxDays: 2,
+    turnaround: '1–2 дня',
+    kind: 'addon',
+    addonId: 'layout-content',
+  },
+
+  // Telegram-боты
+  {
+    id: 'srv-tgbot',
+    category: 'bots',
+    title: 'Telegram-бот под ключ',
+    price: 7000,
+    priceLabel: 'от 7 000 ₽',
+    minDays: 1,
+    maxDays: 2,
+    turnaround: '1–2 дня',
+    kind: 'primary',
+  },
+
+  // Реклама и SEO
+  {
+    id: 'srv-direct',
+    category: 'marketing-seo',
+    title: 'Настройка Яндекс Директ',
+    price: 6000,
+    priceLabel: 'от 6 000 ₽',
+    minDays: 1,
+    maxDays: 2,
+    turnaround: '1–2 дня',
+    kind: 'addon',
+    addonId: 'yandex-direct',
+  },
+  {
+    id: 'srv-context',
+    category: 'marketing-seo',
+    title: 'Настройка контекста (РСЯ)',
+    price: 6000,
+    priceLabel: 'от 6 000 ₽',
+    minDays: 1,
+    maxDays: 2,
+    turnaround: '1–2 дня',
+    kind: 'addon',
+    addonId: 'yandex-direct',
+  },
+  {
+    id: 'srv-seo',
+    category: 'marketing-seo',
+    title: 'SEO продвижение сайтов',
+    price: 7000,
+    priceLabel: 'от 7 000 ₽',
+    minDays: 2,
+    maxDays: 3,
+    turnaround: '2–3 дня',
+    kind: 'addon',
+    addonId: 'basic-seo',
+  },
+  {
+    id: 'srv-domain',
+    category: 'marketing-seo',
+    title: 'Домен (.ru / .рф)',
+    price: 1000,
+    priceLabel: 'от 1 000 ₽',
+    minDays: 1,
+    maxDays: 1,
+    turnaround: '1 час',
+    kind: 'addon',
+    addonId: 'domain-hosting-rf',
+  },
+  {
+    id: 'srv-hosting',
+    category: 'marketing-seo',
+    title: 'Хостинг РФ без VPN',
+    price: 1500,
+    priceLabel: 'от 1 500 ₽',
+    minDays: 1,
+    maxDays: 1,
+    turnaround: '1 час',
+    kind: 'addon',
+    addonId: 'domain-hosting-rf',
+  },
+  {
+    id: 'srv-support',
+    category: 'marketing-seo',
+    title: 'Сопровождение сайта',
+    price: 3000,
+    priceLabel: 'от 3 000 ₽/мес',
+    minDays: 1,
+    maxDays: 1,
+    turnaround: 'постоянно',
+    kind: 'addon',
+    addonId: 'monthly-support',
   },
 ];
 
@@ -159,231 +287,54 @@ export const ADDON_OPTIONS: AddonOption[] = [
   {
     id: 'yandex-direct',
     title: 'Настройка Яндекс Директ',
-    description: 'Сбор горячих запросов по Крыму, минус-слова, запуск Поиска + РСЯ и настройка целей в Метрике.',
-    price: 12000,
+    price: 6000,
     extraDays: 1,
-    note: 'Первые заявки обычно приходят в первые 24 часа после модерации',
+    timingNote: '+1 день',
   },
   {
     id: 'basic-seo',
     title: 'Базовое SEO',
-    description: 'Мета-теги под Саки, Симферополь, Севастополь и Ялту, микроразметка, robots.txt, sitemap и Яндекс Вебмастер.',
-    price: 6000,
+    price: 7000,
     extraDays: 1,
-    note: 'Чистый фундамент для органического трафика из Яндекса',
+    timingNote: '+1 день',
   },
   {
     id: 'domain-hosting-rf',
-    title: 'Домен + хостинг РФ',
-    description: 'Регистрация домена .RU / .РФ на ваше имя, быстрый российский хостинг и SSL-сертификат на 1 год.',
-    price: 3500,
+    title: 'Домен + РФ-хостинг',
+    price: 2500,
     extraDays: 0,
-    note: 'Стабильная работа в Крыму без VPN и зарубежных блокировок',
-  },
-];
-
-export const NICHE_DEMOS: NicheDemoCard[] = [
-  {
-    id: 'hotel',
-    title: 'Гостевой дом / Отель в Крыму',
-    cities: 'Ялта · Саки · Евпатория',
-    recommendedProjectType: 'landing',
-    recommendedAddons: ['domain-hosting-rf', 'basic-seo'],
-    launchTime: '2–3 дня',
-    priceHint: 'от 15 000 ₽',
-    conversionMetric: 'До 38% броней напрямую без комиссии 15–20% агрегаторам',
-    summary: 'Галерея номеров, калькулятор дат, схема пути к морю и мгновенная бронь в Telegram или WhatsApp.',
-    imageUrl: '/src/assets/images/demo_crimea_hotel_1795553201399.jpg',
-    imageAlt: 'Терраса бутик-отеля в Крыму с видом на Чёрное море на закате',
-    preview: {
-      brandName: 'Вилла Кипарис — Ялта',
-      cityTag: 'Южный берег Крыма · 350 м до пляжа',
-      heroTitle: 'Тихий отдых у моря с подогреваемым бассейном и видом на Ай-Петри',
-      heroSubtitle: 'Прямое бронирование от собственника по честной цене без комиссий площадок. Трансфер из Симферополя.',
-      primaryCta: 'Проверить свободные даты',
-      phoneDisplay: '+7 (978) 000-14-80',
-      highlights: [
-        {label: 'До моря пешком', value: '5 мин'},
-        {label: 'Скидка при прямой броне', value: '-12%'},
-        {label: 'Номеров с террасой', value: '14'},
-      ],
-      interactiveLabel: 'Пример виджета выбора номера на сайте',
-      interactiveOptions: [
-        {id: 'std', label: 'Стандарт с балконом (2 гостя)', estimate: '5 400 ₽ / ночь', detail: 'Завтрак включён · Бесплатная отмена за 7 дней'},
-        {id: 'lux', label: 'Люкс с видом на море (до 4 гостей)', estimate: '8 900 ₽ / ночь', detail: 'Панорамная терраса · Бассейн и парковка включены'},
-        {id: 'family', label: 'Семейные апартаменты с кухней', estimate: '10 500 ₽ / ночь', detail: '2 отдельные спальни · Индивидуальная беседка'},
-      ],
-      includedBlocks: [
-        'Первый экран с фото территории и быстрой проверкой дат',
-        'Карточки категорий номеров с сезонным прайсом',
-        'Интерактивная карта расстояний до пляжа, набережной и кафе',
-        'Уведомления о заявках на бронь напрямую в Telegram владельца',
-      ],
-    },
+    timingNote: 'в день старта',
   },
   {
-    id: 'construction',
-    title: 'Строительство и ремонт',
-    cities: 'Симферополь · Севастополь · Саки',
-    recommendedProjectType: 'quiz',
-    recommendedAddons: ['yandex-direct', 'domain-hosting-rf'],
-    launchTime: '1–2 дня',
-    priceHint: 'от 7 000 ₽',
-    conversionMetric: 'Средняя цена целевого замера в Крыму — 420–680 ₽',
-    summary: 'Квиз расчёта стоимости дома или ремонта за 1 минуту, фото сданных объектов и смета по договору.',
-    imageUrl: '/src/assets/images/demo_crimea_construction_1795553200597.jpg',
-    imageAlt: 'Современный дом из ракушечника и травертина в Крыму с панорамным остеклением',
-    preview: {
-      brandName: 'КрымСтройПроект',
-      cityTag: 'Симферополь и Севастополь · Работаем по договору',
-      heroTitle: 'Строительство домов из ракушечника и газоблока в Крыму под ключ',
-      heroSubtitle: 'Фиксируем цену в смете до старта работ. Поэтапная оплата, технадзор и фотоотчёты в Telegram каждую пятницу.',
-      primaryCta: 'Рассчитать смету за 60 секунд',
-      phoneDisplay: '+7 (978) 000-32-19',
-      highlights: [
-        {label: 'Сданных домов в Крыму', value: '47'},
-        {label: 'Гарантия по договору', value: '5 лет'},
-        {label: 'Выезд на участок', value: '0 ₽'},
-      ],
-      interactiveLabel: 'Пример мини-квиза расчёта стоимости',
-      interactiveOptions: [
-        {id: 'box', label: 'Коробка + кровля (100 м²)', estimate: 'от 4,2 млн ₽', detail: 'Фундамент монолитная плита · Ракушечник 400 мм · Срок 3 мес.'},
-        {id: 'pre', label: 'Предчистовая отделка (120 м²)', estimate: 'от 6,4 млн ₽', detail: 'Окна Rehau · Разводка электрики и тёплого пола · Срок 4,5 мес.'},
-        {id: 'repair', label: 'Ремонт квартиры под ключ (65 м²)', estimate: 'от 1,1 млн ₽', detail: 'Черновые + чистовые работы · Закупка материалов со скидкой'},
-      ],
-      includedBlocks: [
-        'Пошаговый квиз расчёта сметы с отправкой ответов в Telegram',
-        'Галерея реализованных объектов с площадью, сроком и бюджетом',
-        'Блок с образцом договора, поэтапной оплатой и гарантией',
-        'Запись на бесплатный выезд инженера на участок или квартиру',
-      ],
-    },
+    id: 'layout-content',
+    title: 'Наполнение контентом',
+    price: 2500,
+    extraDays: 1,
+    timingNote: '+1 день',
   },
   {
-    id: 'autoservice',
-    title: 'Автосервис',
-    cities: 'Симферополь · Севастополь',
-    recommendedProjectType: 'landing',
-    recommendedAddons: ['yandex-direct', 'basic-seo'],
-    launchTime: '2–3 дня',
-    priceHint: 'от 15 000 ₽',
-    conversionMetric: 'Конверсия с мобильного поиска в запись — 11–16%',
-    summary: 'Прозрачный прайс на ТО, диагностику и детейлинг, запись на удобный час и маршрут в Яндекс Навигаторе.',
-    imageUrl: '/src/assets/images/demo_crimea_autoservice_1795553201678.jpg',
-    imageAlt: 'Современный бокс автосервиса и детейлинга с подъёмником и линейным освещением',
-    preview: {
-      brandName: 'Гараж 82 — Автосервис и диагностика',
-      cityTag: 'Симферополь · 6 постов · Запчасти в наличии',
-      heroTitle: 'Точная диагностика и ремонт иномарок с гарантией 12 месяцев',
-      heroSubtitle: 'Называем точную стоимость до начала ремонта. Фото и видео скрытых дефектов отправляем в WhatsApp или Telegram.',
-      primaryCta: 'Записаться на подъёмник сегодня',
-      phoneDisplay: '+7 (978) 000-82-45',
-      highlights: [
-        {label: 'Диагностика ходовой', value: '0 ₽ при ремонте'},
-        {label: 'Постов в работе', value: '6'},
-        {label: 'Средний рейтинг на Картах', value: '4.9'},
-      ],
-      interactiveLabel: 'Пример быстрого выбора услуги и ориентира цены',
-      interactiveOptions: [
-        {id: 'to', label: 'Плановое ТО (масло + фильтры + осмотр)', estimate: 'от 2 500 ₽', detail: 'Выполнение за 50 минут · Проверка 28 узлов в подарок'},
-        {id: 'diag', label: 'Компьютерная диагностика + эндоскопия', estimate: '1 800 ₽', detail: 'Дилерский сканер · Распечатка всех ошибок и рекомендаций'},
-        {id: 'detail', label: 'Полировка кузова + керамика 9H', estimate: 'от 14 000 ₽', detail: 'Защита от крымского солнца и соли · Срок 1 день'},
-      ],
-      includedBlocks: [
-        'Срочная запись в один клик с выбором марки и типа работ',
-        'Таблица базовых цен без «сюрпризов» на приёмке',
-        'Кнопка «Построить маршрут в Яндекс Навигаторе» для мобильных',
-        'Интеграция отзывов с Яндекс Карт и уведомление мастера в Telegram',
-      ],
-    },
-  },
-  {
-    id: 'beauty-med',
-    title: 'Медицина / Бьюти',
-    cities: 'Ялта · Симферополь · Севастополь',
-    recommendedProjectType: 'landing',
-    recommendedAddons: ['basic-seo', 'domain-hosting-rf'],
-    launchTime: '2–3 дня',
-    priceHint: 'от 15 000 ₽',
-    conversionMetric: '+65% к онлайн-записям в нерабочие часы через сайт и бота',
-    summary: 'Профили врачей и мастеров, понятный прайс процедур, сертификаты и онлайн-запись с напоминанием.',
-    imageUrl: '/src/assets/images/demo_crimea_beauty_med_1795553199514.jpg',
-    imageAlt: 'Минималистичная рецепция эстетической клиники и студии красоты из тёплого камня',
-    preview: {
-      brandName: 'Эстетика ЮБК — Клиника косметологии',
-      cityTag: 'Ялта · Медицинская лицензия № Л041',
-      heroTitle: 'Аппаратная и инъекционная косметология с врачебным подходом',
-      heroSubtitle: 'Приём ведут врачи-дерматологи со стажем от 8 лет. Сертифицированные препараты и индивидуальный план ухода.',
-      primaryCta: 'Записаться на консультацию врача',
-      phoneDisplay: '+7 (978) 000-55-12',
-      highlights: [
-        {label: 'Врачей в штате', value: '6'},
-        {label: 'Повторных визитов', value: '84%'},
-        {label: 'Напоминание о визите', value: 'Telegram'},
-      ],
-      interactiveLabel: 'Пример интерактивного прайса процедур',
-      interactiveOptions: [
-        {id: 'consult', label: 'Первичная диагностика кожи + план ухода', estimate: '1 500 ₽', detail: 'Бесплатно при прохождении процедуры в день визита'},
-        {id: 'rf', label: 'Микроигольчатый RF-лифтинг (лицо)', estimate: '12 500 ₽', detail: '45 минут · Одноразовая стерильная насадка при пациенте'},
-        {id: 'clean', label: 'Комбинированная атравматичная чистка', estimate: '4 200 ₽', detail: '60 минут · Космецевтика Holy Land / Christina'},
-      ],
-      includedBlocks: [
-        'Карточки специалистов с дипломами, стажем и реальными фото',
-        'Структурированный прайс по направлениям без мелкого шрифта',
-        'Онлайн-запись с передачей заявки администратору в Telegram',
-        'Блок с лицензиями, стерилизацией и ответами на частые вопросы',
-      ],
-    },
+    id: 'monthly-support',
+    title: 'Сопровождение 1 мес',
+    price: 3000,
+    extraDays: 0,
+    timingNote: '1 месяц',
   },
 ];
 
 export const PROCESS_STEPS = [
   {
     number: '01.',
-    title: 'Бесплатный прототип первого экрана за 24 часа',
-    description:
-      'Изучаем вашу нишу и конкурентов в Крыму, собираем оффер и показываем живой макет первого экрана до предоплаты.',
+    title: 'Задача за 15 минут',
+    description: 'Обсуждаем ваш бизнес в Telegram, MAX или чате Авито.',
   },
   {
     number: '02.',
-    title: 'Разработка, адаптив и связка с Telegram',
-    description:
-      'Верстаем чистый быстрый код, адаптируем под смартфоны (75% трафика в Крыму идёт с мобильных) и подключаем мгновенные заявки.',
+    title: 'Бесплатный прототип за 24 часа (0 ₽)',
+    description: 'Показываем готовый первый экран до предоплаты.',
   },
   {
     number: '03.',
-    title: 'Запуск на российском хостинге без сбоев',
-    description:
-      'Регистрируем домен .RU / .РФ на вас, ставим SSL, Яндекс Метрику и проверяем открытие со всех крымских операторов без VPN.',
+    title: 'Запуск под ключ за 1–3 дня',
+    description: 'Подключаем приём заявок, домен/хостинг РФ и передаём все доступы.',
   },
-  {
-    number: '04.',
-    title: 'Передача ключей и 14 дней поддержки',
-    description:
-      'Отдаём все доступы и короткую видеоинструкцию, как менять цены или фото. Две недели бесплатно помогаем с правками после старта.',
-  },
-];
-
-export const CRIMEA_CASES = [
-  {
-    metric: '+41 прямая бронь за май–июнь',
-    context: 'Гостевой дом «Морской бриз», Саки · Лендинг + Яндекс Директ',
-    quote:
-      'Раньше 80% гостей приходило с площадок с комиссией. После запуска нового сайта с быстрой заявкой в Telegram за первые 6 недель закрыли половину июльских номеров напрямую.',
-    author: 'Андрей Кравцов, владелец гостевого дома, Саки',
-  },
-  {
-    metric: '520 ₽ средняя цена замера',
-    context: 'Ремонт и строительство «ЮгМонолит», Севастополь · Квиз-сайт',
-    quote:
-      'Запустили квиз за 2 дня. Заявки сразу приходят в Telegram с площадью дома и районом — замерщик не тратит время на пустые звонки.',
-    author: 'Дмитрий Соколов, руководитель подрядной бригады, Севастополь',
-  },
-  {
-    metric: '34 записи за первые 14 дней',
-    context: 'Автосервис и детейлинг, Симферополь · Лендинг + SEO',
-    quote:
-      'Сделали понятный прайс и кнопку маршрута в Яндекс Навигаторе. Клиенты с мобильного сразу записываются на ТО и полировку без долгих переписок.',
-    author: 'Руслан Меметов, управляющий автосервисом, Симферополь',
-  },
-];
+] as const;
