@@ -116,7 +116,6 @@ export interface LeadBriefInput {
   city: string;
   comment: string;
   calcState: CalculatorState;
-  forAvito?: boolean;
 }
 
 export function buildFormattedBrief(input: LeadBriefInput): string {
@@ -127,9 +126,7 @@ export function buildFormattedBrief(input: LeadBriefInput): string {
       : 'Без доп. опций';
 
   const lines: string[] = [
-    input.forAvito
-      ? 'Здравствуйте! Интересует разработка под ключ и бесплатный прототип первого экрана.'
-      : 'Заявка на бесплатный прототип первого экрана — M_WEB (Крым)',
+    'Заявка на бесплатный прототип первого экрана — M_WEB (Крым)',
     '',
     `Услуга: ${estimate.service.title}`,
     `Доп. опции: ${addonNames}`,
@@ -142,7 +139,7 @@ export function buildFormattedBrief(input: LeadBriefInput): string {
   if (input.name.trim()) {
     lines.push(`Имя: ${input.name.trim()}`);
   }
-  if (!input.forAvito && input.contact.trim()) {
+  if (input.contact.trim()) {
     lines.push(`Контакт: ${input.contact.trim()}`);
   }
   if (input.comment.trim()) {
@@ -152,7 +149,11 @@ export function buildFormattedBrief(input: LeadBriefInput): string {
   return lines.join('\n');
 }
 
-export function buildTelegramDirectHref(username: string, briefText: string): string {
-  const cleanHandle = username.replace(/^@/, '').trim() || 'YOUR_TELEGRAM';
-  return `https://t.me/${encodeURIComponent(cleanHandle)}?text=${encodeURIComponent(briefText)}`;
+export function buildTelegramDirectHref(username: string, briefText?: string): string {
+  const cleanHandle = username.replace(/^@/, '').trim() || 'M_Web_production';
+  const baseUrl = `https://t.me/${encodeURIComponent(cleanHandle)}`;
+  if (!briefText || !briefText.trim()) {
+    return baseUrl;
+  }
+  return `${baseUrl}?text=${encodeURIComponent(briefText)}`;
 }

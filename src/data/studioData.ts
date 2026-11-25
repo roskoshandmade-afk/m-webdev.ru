@@ -325,7 +325,7 @@ export const PROCESS_STEPS = [
   {
     number: '01.',
     title: 'Задача за 15 минут',
-    description: 'Обсуждаем ваш бизнес в Telegram, MAX или чате Авито.',
+    description: 'Обсуждаем ваш бизнес в Telegram или мессенджере MAX.',
   },
   {
     number: '02.',

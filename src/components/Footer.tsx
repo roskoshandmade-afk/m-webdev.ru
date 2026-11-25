@@ -1,6 +1,15 @@
+import {
+  getSafeHttpsUrl,
+  MAX_PROFILE_URL,
+  TELEGRAM_PROFILE_URL,
+} from '../config/leadConfig';
 import {MWebLogo} from './MWebLogo';
 
 export function Footer() {
+  const safeMaxHref =
+    getSafeHttpsUrl(MAX_PROFILE_URL) ??
+    'https://max.ru/u/f9LHodD0cOI0Lot98NYptOQhSk7YF0raqppODtBQRVk-kXF2B4txMgE0xl0';
+
   return (
     <footer className="relative overflow-hidden border-t border-[#E2E8F0] bg-white py-12 sm:py-14">
       <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-8">
@@ -18,7 +27,24 @@ export function Footer() {
               Веб-дизайн и разработка под ключ в Крыму
             </p>
             <p className="text-xs sm:text-sm text-[#475569] max-w-md leading-relaxed">
-              Работаем 100% онлайн по всему Крыму и РФ · Telegram, MAX и Авито
+              Работаем 100% онлайн по всему Крыму и РФ ·{' '}
+              <a
+                href={TELEGRAM_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[#0F172A] hover:text-[#2563EB] underline-offset-4 hover:underline transition-colors"
+              >
+                Telegram
+              </a>{' '}
+              и{' '}
+              <a
+                href={safeMaxHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[#0F172A] hover:text-[#2563EB] underline-offset-4 hover:underline transition-colors"
+              >
+                MAX
+              </a>
             </p>
           </div>
         </div>

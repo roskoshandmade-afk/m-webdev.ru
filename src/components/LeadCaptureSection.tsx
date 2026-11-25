@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState, type FormEvent, type RefObject} from 'react';
 import {AlertCircle, Check, CheckCircle2, Copy, ExternalLink, Send} from 'lucide-react';
 import {
-  AVITO_PROFILE_URL,
   getSafeHttpsUrl,
   getSafeWebhookUrl,
   MAX_PROFILE_URL,
@@ -33,7 +32,7 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
   const [comment, setComment] = useState('');
   const [fieldError, setFieldError] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<ActionFeedback>(null);
-  const [copiedChannel, setCopiedChannel] = useState<'max' | 'avito' | 'brief' | null>(null);
+  const [copiedChannel, setCopiedChannel] = useState<'max' | 'brief' | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const toastTimerRef = useRef<number | null>(null);
 
@@ -63,21 +62,12 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
     city,
     comment,
     calcState,
-    forAvito: false,
-  });
-
-  const avitoBrief = buildFormattedBrief({
-    name,
-    contact,
-    city,
-    comment,
-    calcState,
-    forAvito: true,
   });
 
   const telegramDirectHref = buildTelegramDirectHref(TELEGRAM_USERNAME, standardBrief);
-  const safeMaxHref = getSafeHttpsUrl(MAX_PROFILE_URL) ?? 'https://max.ru/';
-  const safeAvitoHref = getSafeHttpsUrl(AVITO_PROFILE_URL);
+  const safeMaxHref =
+    getSafeHttpsUrl(MAX_PROFILE_URL) ??
+    'https://max.ru/u/f9LHodD0cOI0Lot98NYptOQhSk7YF0raqppODtBQRVk-kXF2B4txMgE0xl0';
 
   const sendSilentWebhook = (actionSource: string) => {
     const webhookUrl = getSafeWebhookUrl();
@@ -85,28 +75,32 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
       return;
     }
 
-    const payload = {
-      source: actionSource,
-      name: name.trim(),
-      contact: contact.trim(),
-      city,
-      serviceTitle: estimate.service.title,
-      addons: estimate.addons.map((a) => a.title),
-      estimatedCost: estimate.formattedCost,
-      turnaround: estimate.turnaround,
-      comment: comment.trim(),
-      briefText: standardBrief,
-      submittedAt: new Date().toISOString(),
-    };
+    try {
+      const payload = {
+        source: actionSource,
+        name: name.trim(),
+        contact: contact.trim(),
+        city,
+        serviceTitle: estimate.service.title,
+        addons: estimate.addons.map((a) => a.title),
+        estimatedCost: estimate.formattedCost,
+        turnaround: estimate.turnaround,
+        comment: comment.trim(),
+        briefText: standardBrief,
+        submittedAt: new Date().toISOString(),
+      };
 
-    void fetch(webhookUrl, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload),
-      keepalive: true,
-    }).catch(() => {
-      // Silently ignore network/CORS issues so client-side action always succeeds
-    });
+      void fetch(webhookUrl, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload),
+        keepalive: true,
+      }).catch(() => {
+        // Silently ignore network/CORS issues so client-side action always succeeds
+      });
+    } catch {
+      // Never block client-side Telegram/MAX navigation if webhook dispatch fails
+    }
   };
 
   const copyTextRaw = async (text: string): Promise<boolean> => {
@@ -157,26 +151,6 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
       }
     });
     sendSilentWebhook('max_messenger');
-  };
-
-  const handleAvitoCopy = async () => {
-    setFieldError(null);
-    const copied = await copyTextRaw(avitoBrief);
-    if (copied) {
-      setCopiedChannel('avito');
-      sendSilentWebhook('avito_copy');
-      showToast('Бриф скопирован — вставьте в переписку на Авито');
-      setFeedback({
-        title: 'Бриф скопирован — вставьте в переписку на Авито',
-        detail:
-          'Текст очищен от внешних ссылок и номеров, чтобы спокойно пройти модерацию чата Авито.',
-      });
-      window.setTimeout(() => {
-        setCopiedChannel((curr) => (curr === 'avito' ? null : curr));
-      }, 3000);
-    } else {
-      setFieldError('Не удалось автоматически скопировать — выделите текст брифа справа вручную.');
-    }
   };
 
   const handleCopyStandardBrief = async () => {
@@ -230,8 +204,8 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
             Обсудить проект и получить прототип за 24 ч
           </h2>
           <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
-            Выбранные услуги и смета уже подставлены в бриф. Отправьте заявку напрямую в Telegram,
-            мессенджер MAX или скопируйте готовый текст для переписки на Авито.
+            Выбранные услуги и смета уже подставлены в бриф. Отправьте заявку напрямую в Telegram
+            или мессенджер MAX.
           </p>
         </div>
 
@@ -363,8 +337,8 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
               </div>
             )}
 
-            {/* Strictly 3 Channels: Telegram, MAX, Авито */}
-            <div className="space-y-3 pt-1">
+            {/* Strictly 2 Channels: Telegram and MAX */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <a
                 href={telegramDirectHref}
                 target="_blank"
@@ -376,49 +350,24 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
                 <span>Отправить в Telegram</span>
               </a>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a
-                  href={safeMaxHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleMaxClick}
-                  className="w-full min-h-[50px] px-5 py-3 rounded-full bg-[#0F172A] hover:bg-[#1E293B] text-white font-semibold text-sm transition-colors inline-flex items-center justify-center gap-2.5 whitespace-nowrap"
+              <a
+                href={safeMaxHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleMaxClick}
+                className="w-full min-h-[52px] px-6 py-3.5 rounded-full bg-[#0F172A] hover:bg-[#1E293B] text-white font-semibold text-sm sm:text-base transition-colors inline-flex items-center justify-center gap-2.5 whitespace-nowrap"
+              >
+                <span
+                  className="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-[#0EA5E9]/20 border border-[#0EA5E9]/40 text-[10px] font-bold tracking-wider text-[#38BDF8] leading-none shrink-0"
+                  aria-hidden="true"
                 >
-                  <span
-                    className="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-[#0EA5E9]/20 border border-[#0EA5E9]/40 text-[10px] font-bold tracking-wider text-[#38BDF8] leading-none shrink-0"
-                    aria-hidden="true"
-                  >
-                    MAX
-                  </span>
-                  <span>
-                    {copiedChannel === 'max' ? 'Скопировано для MAX' : 'Написать в MAX'}
-                  </span>
-                  <ExternalLink className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
-                </a>
-
-                <button
-                  type="button"
-                  onClick={() => void handleAvitoCopy()}
-                  className="w-full min-h-[50px] px-5 py-3 rounded-full border border-[#E2E8F0] hover:border-[#2563EB] bg-white text-[#0F172A] hover:text-[#2563EB] font-semibold text-sm transition-colors inline-flex items-center justify-center gap-2.5 whitespace-nowrap cursor-pointer"
-                >
-                  {copiedChannel === 'avito' ? (
-                    <>
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0" aria-hidden="true" />
-                      <span className="text-emerald-700">Скопировано для Авито</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="grid grid-cols-2 gap-[2.5px] shrink-0" aria-hidden="true">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#00AAFF]" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#97CF26]" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#A169F7]" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF6163]" />
-                      </span>
-                      <span>Скопировать для Авито</span>
-                    </>
-                  )}
-                </button>
-              </div>
+                  MAX
+                </span>
+                <span>
+                  {copiedChannel === 'max' ? 'Скопировано для MAX' : 'Написать в MAX'}
+                </span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
+              </a>
             </div>
           </form>
 
@@ -437,47 +386,28 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
               {standardBrief}
             </pre>
 
-            <div className="space-y-2.5">
-              <button
-                type="button"
-                onClick={() => void handleCopyStandardBrief()}
-                className="w-full min-h-[44px] px-4 py-2.5 rounded-full border border-[#E2E8F0] hover:border-[#2563EB] bg-white text-sm font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
-              >
-                {copiedChannel === 'brief' ? (
-                  <>
-                    <Check className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-                    <span className="text-emerald-700">Бриф скопирован</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4 shrink-0" aria-hidden="true" />
-                    <span>Скопировать текст брифа</span>
-                  </>
-                )}
-              </button>
-
-              {safeAvitoHref && (
-                <a
-                  href={safeAvitoHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full min-h-[44px] px-4 py-2.5 rounded-full border border-[#E2E8F0] hover:border-[#2563EB] bg-[#F8FAFC] text-sm font-medium text-[#0F172A] hover:text-[#2563EB] transition-colors inline-flex items-center justify-center gap-2 whitespace-nowrap"
-                >
-                  <span>Открыть профиль на Авито</span>
-                  <ExternalLink className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                </a>
+            <button
+              type="button"
+              onClick={() => void handleCopyStandardBrief()}
+              className="w-full min-h-[44px] px-4 py-2.5 rounded-full border border-[#E2E8F0] hover:border-[#2563EB] bg-white text-sm font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+            >
+              {copiedChannel === 'brief' ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+                  <span className="text-emerald-700">Бриф скопирован</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 shrink-0" aria-hidden="true" />
+                  <span>Скопировать текст брифа</span>
+                </>
               )}
-            </div>
-
-            <p className="text-xs text-[#475569] leading-relaxed pt-2 border-t border-[#E2E8F0]">
-              Кнопка для Авито автоматически убирает внешние ссылки и номера телефонов, чтобы
-              сообщение прошло модерацию переписки.
-            </p>
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Green floating toast notification for MAX / Avito clipboard copy */}
+      {/* Green floating toast notification for clipboard copy */}
       {toastMessage && (
         <div
           role="status"
