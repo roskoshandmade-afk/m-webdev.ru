@@ -1,16 +1,24 @@
-export type ServiceCategoryId = 'sites' | 'design-dev' | 'bots' | 'marketing-seo';
+export type ServiceCategoryId =
+  | 'sites'
+  | 'webapps'
+  | 'design-dev'
+  | 'bots'
+  | 'marketing-seo';
 
 export type AddonId =
   | 'yandex-direct'
   | 'basic-seo'
   | 'domain-hosting-rf'
   | 'layout-content'
-  | 'monthly-support';
+  | 'monthly-support'
+  | 'webapp-maintenance'
+  | 'webapp-retainer';
 
 export interface ServiceOption {
   id: string;
   category: ServiceCategoryId;
   title: string;
+  subtitle?: string;
   price: number;
   priceLabel: string;
   minDays: number;
@@ -27,6 +35,7 @@ export interface AddonOption {
   price: number;
   extraDays: number;
   timingNote: string;
+  isMonthly?: boolean;
 }
 
 export const CRIMEA_CITIES = [
@@ -40,6 +49,7 @@ export const CRIMEA_CITIES = [
 
 export const SERVICE_TABS: {id: ServiceCategoryId; label: string}[] = [
   {id: 'sites', label: 'Сайты под ключ'},
+  {id: 'webapps', label: 'Веб-приложения'},
   {id: 'design-dev', label: 'Дизайн и доработка'},
   {id: 'bots', label: 'Telegram-боты'},
   {id: 'marketing-seo', label: 'Реклама и SEO'},
@@ -124,6 +134,58 @@ export const SERVICE_CATALOG: ServiceOption[] = [
     maxDays: 7,
     turnaround: '4–7 дней',
     kind: 'primary',
+  },
+
+  // Веб-приложения и содержание
+  {
+    id: 'srv-webapp-pwa',
+    category: 'webapps',
+    title: 'PWA / калькулятор-сервис',
+    subtitle: 'Онлайн-калькулятор, запись или интерактивный веб-сервис',
+    price: 18000,
+    priceLabel: 'от 18 000 ₽',
+    minDays: 3,
+    maxDays: 5,
+    turnaround: '3–5 дней',
+    kind: 'primary',
+  },
+  {
+    id: 'srv-webapp-dashboard',
+    category: 'webapps',
+    title: 'Веб-приложение / дашборд',
+    subtitle: 'Личный кабинет, учёт заявок, панель управления и аналитика',
+    price: 25000,
+    priceLabel: 'от 25 000 ₽',
+    minDays: 4,
+    maxDays: 7,
+    turnaround: '4–7 дней',
+    kind: 'primary',
+  },
+  {
+    id: 'srv-webapp-maintenance',
+    category: 'webapps',
+    title: 'Содержание веб-приложения (1 мес)',
+    subtitle: 'Обновления, правки, мониторинг и резервные копии',
+    price: 4500,
+    priceLabel: 'от 4 500 ₽/мес',
+    minDays: 1,
+    maxDays: 1,
+    turnaround: 'ежемесячно',
+    kind: 'addon',
+    addonId: 'webapp-maintenance',
+  },
+  {
+    id: 'srv-webapp-retainer',
+    category: 'webapps',
+    title: 'Регламентное сопровождение и доработки',
+    subtitle: 'Развитие функций, приоритетные правки и резервное копирование',
+    price: 8000,
+    priceLabel: 'от 8 000 ₽/мес',
+    minDays: 1,
+    maxDays: 1,
+    turnaround: 'ежемесячно',
+    kind: 'addon',
+    addonId: 'webapp-retainer',
   },
 
   // Дизайн и доработка
@@ -314,10 +376,27 @@ export const ADDON_OPTIONS: AddonOption[] = [
   },
   {
     id: 'monthly-support',
-    title: 'Сопровождение 1 мес',
+    title: 'Сопровождение сайта (1 мес)',
     price: 3000,
     extraDays: 0,
     timingNote: '1 месяц',
+    isMonthly: true,
+  },
+  {
+    id: 'webapp-maintenance',
+    title: 'Содержание веб-приложения (1 мес)',
+    price: 4500,
+    extraDays: 0,
+    timingNote: '1 месяц',
+    isMonthly: true,
+  },
+  {
+    id: 'webapp-retainer',
+    title: 'Регламентное сопровождение и доработки',
+    price: 8000,
+    extraDays: 0,
+    timingNote: '1 месяц',
+    isMonthly: true,
   },
 ];
 

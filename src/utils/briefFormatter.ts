@@ -118,11 +118,17 @@ export interface LeadBriefInput {
   calcState: CalculatorState;
 }
 
+export function formatAddonPrice(price: number, isMonthly?: boolean): string {
+  return isMonthly ? `${formatRub(price)}/мес` : formatRub(price);
+}
+
 export function buildFormattedBrief(input: LeadBriefInput): string {
   const estimate = calculateEstimate(input.calcState);
   const addonNames =
     estimate.addons.length > 0
-      ? estimate.addons.map((a) => a.title).join(', ')
+      ? estimate.addons
+          .map((a) => `${a.title} (+${formatAddonPrice(a.price, a.isMonthly)})`)
+          .join(', ')
       : 'Без доп. опций';
 
   const lines: string[] = [

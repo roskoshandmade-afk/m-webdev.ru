@@ -8,8 +8,25 @@ import {
   type ServiceCategoryId,
   type ServiceOption,
 } from '../data/studioData';
-import {calculateEstimate, formatRub, type CalculatorState} from '../utils/briefFormatter';
+import {
+  calculateEstimate,
+  formatAddonPrice,
+  formatRub,
+  type CalculatorState,
+} from '../utils/briefFormatter';
 import {PalmShadows} from './PalmShadows';
+
+function pluralizeServices(count: number): string {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) {
+    return `${count} услуга`;
+  }
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+    return `${count} услуги`;
+  }
+  return `${count} услуг`;
+}
 
 interface ServicesAndCalculatorProps {
   calcState: CalculatorState;
@@ -59,7 +76,7 @@ export function ServicesAndCalculator({
           </div>
 
           <p className="text-xs sm:text-sm text-[#475569] whitespace-nowrap shrink-0 tabular-nums">
-            20 услуг · фиксируем смету до старта
+            {pluralizeServices(SERVICE_CATALOG.length)} · фиксируем смету до старта
           </p>
         </div>
 
@@ -131,6 +148,10 @@ export function ServicesAndCalculator({
                         {service.title}
                       </h3>
 
+                      {service.subtitle && (
+                        <p className="text-xs text-[#475569] leading-relaxed">{service.subtitle}</p>
+                      )}
+
                       <div className="font-heading text-xl font-extrabold text-[#0F172A] tabular-nums tracking-[-0.02em]">
                         {service.priceLabel}
                       </div>
@@ -198,7 +219,9 @@ export function ServicesAndCalculator({
                         {active && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                       </span>
                       <span>{addon.title}</span>
-                      <span className="tabular-nums opacity-80">+{formatRub(addon.price)}</span>
+                      <span className="tabular-nums opacity-80">
+                        +{formatAddonPrice(addon.price, addon.isMonthly)}
+                      </span>
                     </button>
                   );
                 })}
@@ -256,7 +279,7 @@ export function ServicesAndCalculator({
                         <span className="text-[#0F172A] font-medium truncate">{addon.title}</span>
                         <div className="flex items-center gap-2 shrink-0">
                           <span className="font-semibold text-[#0F172A] tabular-nums">
-                            +{formatRub(addon.price)}
+                            +{formatAddonPrice(addon.price, addon.isMonthly)}
                           </span>
                           <button
                             type="button"
