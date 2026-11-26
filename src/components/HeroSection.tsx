@@ -35,9 +35,8 @@ export function HeroSection({onRequestPrototype, onJumpToCalculator}: HeroSectio
                 <span>Работаем онлайн по всему Крыму и РФ</span>
               </div>
 
-              <h1 className="font-heading text-3xl sm:text-[3rem] lg:text-[3.35rem] font-extrabold text-[#0F172A] leading-[1.08] tracking-[-0.03em] text-balance">
-                Сайты, квизы и Telegram-боты{' '}
-                <span className="text-[#2563EB]">под ключ за 1–3 дня</span>
+              <h1 className="font-heading text-3xl sm:text-[2.75rem] lg:text-[3.15rem] font-extrabold text-[#0F172A] leading-[1.08] tracking-[-0.03em] text-balance">
+                Разработка сайтов, веб-приложений, <span className="text-[#2563EB]">Telegram-ботов и SEO</span>
               </h1>
 
               <p className="text-base sm:text-lg leading-relaxed text-[#475569] max-w-xl">
