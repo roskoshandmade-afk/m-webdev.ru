@@ -3,6 +3,7 @@ import {
   MAX_PROFILE_URL,
   TELEGRAM_PROFILE_URL,
 } from '../config/leadConfig';
+import {trackMaxClick, trackTelegramClick} from '../utils/metrica';
 import {MWebLogo} from './MWebLogo';
 
 export function Footer() {
@@ -32,6 +33,7 @@ export function Footer() {
                 href={TELEGRAM_PROFILE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackTelegramClick()}
                 className="font-medium text-[#0F172A] hover:text-[#2563EB] underline-offset-4 hover:underline transition-colors"
               >
                 Telegram
@@ -41,6 +43,7 @@ export function Footer() {
                 href={safeMaxHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackMaxClick()}
                 className="font-medium text-[#0F172A] hover:text-[#2563EB] underline-offset-4 hover:underline transition-colors"
               >
                 MAX

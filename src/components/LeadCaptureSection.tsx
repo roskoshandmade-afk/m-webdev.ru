@@ -13,6 +13,7 @@ import {
   calculateEstimate,
   type CalculatorState,
 } from '../utils/briefFormatter';
+import {trackMaxClick, trackTelegramClick} from '../utils/metrica';
 import {PalmShadows} from './PalmShadows';
 
 interface LeadCaptureSectionProps {
@@ -124,6 +125,7 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
 
   const handleTelegramClick = () => {
     setFieldError(null);
+    trackTelegramClick();
     sendSilentWebhook('telegram_direct');
     setFeedback({
       title: 'Открываем диалог в Telegram',
@@ -134,6 +136,7 @@ export function LeadCaptureSection({calcState, nameInputRef}: LeadCaptureSection
 
   const handleMaxClick = () => {
     setFieldError(null);
+    trackMaxClick();
     void copyTextRaw(standardBrief).then((copied) => {
       if (copied) {
         setCopiedChannel('max');
